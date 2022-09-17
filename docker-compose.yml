@@ -1,0 +1,25 @@
+version: '3'
+services:
+    web:
+        container_name: "blog-web"
+        image: ambientum/php:8.1-nginx
+        ports:
+            - '8080:8080'
+        volumes:
+            - '.:/var/www/app'
+        depends_on:
+            - database
+        links:
+            - 'database'
+
+    database:
+        container_name: "blog-database"
+        platform: linux/x86_64
+        image: mysql:8
+        command: --default-authentication-plugin=mysql_native_password
+        ports:
+            - '3306:3306'
+        environment:
+          MYSQL_ROOT_PASSWORD: 'secret'
+          MYSQL_DATABASE: 'blog'
+
