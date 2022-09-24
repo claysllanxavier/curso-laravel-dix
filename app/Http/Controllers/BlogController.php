@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class BlogController extends Controller
 {
     public function index(){
-        $noticias = Noticia::get();
+        $noticias = Noticia::where('user_id', auth()->user()->id)->get();
 
         return view('blog.index', compact('noticias'));
     }
@@ -20,22 +20,27 @@ class BlogController extends Controller
     public function store(Request $request){
         $this->validate($request, [
             'titulo' => ['required', 'max:40'],
-            'autor' => ['required', 'max:181'],
             'conteudo' => ['required']
         ]);
 
 
         Noticia::create([
             'titulo' => $request->titulo,
-            'autor' => $request->autor,
+            'user_id' => auth()->user()->id,
             'conteudo' => $request->conteudo,
         ]);
 
-        return redirect()->to('/blog');
+        return redirect()->to('/blog')
+        ->with('sucesso', 'Notícia criada com sucesso.');
     }
 
     public function show($id){
+
         $noticia = Noticia::findOrFail($id);
+
+        if($noticia->user_id != auth()->user()->id){
+            abort(403, "Essa nóticia não e sua.");
+        }
 
         return view('blog.show', compact('noticia'));
     }

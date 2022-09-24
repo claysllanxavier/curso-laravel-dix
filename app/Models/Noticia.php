@@ -13,7 +13,11 @@ class Noticia extends Model
 
     protected $fillable = [
         'titulo',
-        'autor',
+        'user_id',
         'conteudo'
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

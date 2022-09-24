@@ -16,6 +16,11 @@
                 <a href="{{ route('blog.create') }}" class="btn btn-primary float-end">Nova Notícia</a>
             </div>
             <div class="col-12">
+                @if (session('sucesso'))
+                    <div class="alert alert-success">
+                        {{ session('sucesso') }}
+                    </div>
+                @endif
                 <table class="table">
                     <thead>
                         <tr>
@@ -29,7 +34,7 @@
                         @forelse($noticias as $noticia)
                             <tr>
                                 <td>{{ $noticia->titulo }}</td>
-                                <td>{{ $noticia->autor }}</td>
+                                <td>{{ $noticia->user->name }}</td>
                                 <td>{{ $noticia->created_at->format('d/m/Y H:i') }}</td>
                                 <td>
                                     <a href="{{ route('blog.show', $noticia->id) }}" class="btn btn-sm btn-info">Visualizar</a>

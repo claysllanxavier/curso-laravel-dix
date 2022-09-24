@@ -14,7 +14,7 @@
             </div>
             <div class="col-12">
                 <p><b>Titulo:</b> {{ $noticia->titulo}}</p>
-                <p><b>Autor:</b> {{ $noticia->autor}}</p>
+                <p><b>Autor:</b> {{ $noticia->user->name }}</p>
                 <p><b>Conteúdo:</b> {{ $noticia->conteudo}}</p>
                 <p><b>Dt. Criação:</b> {{ $noticia->created_at->format('d/m/Y H:i')}}</p>
                 <p><b>Dt. Atualização:</b> {{ $noticia->updated_at->format('d/m/Y H:i')}}</p>
